@@ -5,9 +5,14 @@
             <div id="percent-text"><span id="percent">10</span>% av målet på 10 000 kr</div>
         </div>
 
+        <ul id="comments">
+
+        </ul>
+
         <script>
             const valueDiv = document.getElementById('value');
             const percentDiv = document.getElementById('percent');
+            const commentsDiv = document.getElementById('comments');
 
             setInterval(() => {
 
@@ -22,6 +27,14 @@
                             let donations = JSON.parse(request.responseText);
                             valueDiv.innerText = donations.value;
                             percentDiv.innerText = donations.percent;
+                            commentsDiv.innerHTML = donations.donations.html;
+
+                            const elements = document.querySelectorAll('.FunderWall-funder:not(.FunderWall-funder--withMessage)');
+
+                            elements.forEach(element => {
+                                
+                                element.remove();
+                            });
                         }
                     }
                     request.send(null);
@@ -43,6 +56,65 @@
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 padding: 20px;
                 font-size: 32px;
+            }
+
+            #comments{
+                position: absolute;
+                bottom: 20px;
+                right: 0px;
+                background: #0066cc;
+                padding: 20px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-size: 20px;
+                color: white;
+                width: 500px;
+                margin: 0px;
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+                gap:15px;
+            }
+
+            .FunderWall-funderAvatar{
+                display: none;
+            }
+
+            .FunderWall-funder.FunderWall-funder--withMessage{
+                display: none;
+            }
+
+            .FunderWall-funder--withMessage:nth-child(-n+3){
+                display: block;
+
+            }
+
+            .FunderWall-funder{
+                display: none;
+            }
+
+            li{
+                list-style-type: none;
+                margin: 0px;
+            }
+
+            p{
+                margin: 0;
+            }
+
+            .FunderWall-funderName{
+                font-weight: bold;
+            }
+
+            .FunderWall-funderTimestamp{
+
+            }
+
+            .FunderWall-funderMeta{
+
+            }
+
+            .FunderWall-funderMessage{
+                margin-top: 10px;
             }
         </style>
     </body>
