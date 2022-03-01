@@ -1,0 +1,49 @@
+<html>
+    <body>
+        <div id="donations">
+            <div id="value-text">Insamlat: <span id="value">100</span> kr</div>
+            <div id="percent-text"><span id="percent">10</span>% av målet på 10 000 kr</div>
+        </div>
+
+        <script>
+            const valueDiv = document.getElementById('value');
+            const percentDiv = document.getElementById('percent');
+
+            setInterval(() => {
+
+                    var request = new XMLHttpRequest();
+                    
+                    request.open("GET", 'donations.json', false);
+                    request.setRequestHeader('Cache-Control', 'no-cache');
+                    request.onreadystatechange = function ()
+                    {
+                        if(request.readyState === 4)
+                        {
+                            let donations = JSON.parse(request.responseText);
+                            valueDiv.innerText = donations.value;
+                            percentDiv.innerText = donations.percent;
+                        }
+                    }
+                    request.send(null);
+                
+            },1000);
+        </script>
+
+        <style>
+            #donations{
+                position: absolute;
+                bottom: 20px;
+                left: 0px;
+                width: 500px;
+                background: #0066cc;
+                color: #ffcc00;
+                overflow-y: hidden;
+                max-height: 300px;
+                scroll-behavior: smooth;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                padding: 20px;
+                font-size: 32px;
+            }
+        </style>
+    </body>
+</html>
